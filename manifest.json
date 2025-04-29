@@ -1,0 +1,30 @@
+{
+    "manifest_version": 2,
+    "name": "Reel Classifier",
+    "version": "0.0",
+  
+    "description": "Rate reels to train an AI",
+  
+    "icons": {
+      "48": "icons/48.png",
+      "96": "icons/96.png"
+    },
+
+    "permissions": [
+        "activeTab"
+    ],
+
+    "browser_action": {
+        "default_icon": "icons/48.png",
+        "default_title": "Reel Classifier",
+        "default_popup": "popup.html"
+    },
+  
+    "content_scripts": [
+      {
+        "matches": ["*://*.instagram.com/reels/*"],
+        "js": ["createoverlay.js"]
+      }
+    ]
+  }
+  
