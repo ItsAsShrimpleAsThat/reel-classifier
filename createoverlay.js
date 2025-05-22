@@ -14,12 +14,12 @@ document.body.appendChild(overlayElement)
 const funnySlider = document.getElementById("funnyslider");
 const lastrecordedvalue = document.getElementById("lastrecordedvalue");
 
-if(localStorage.getItem("reels") == null)
+if(localStorage.getItem("reels") == null || localStorage.getItem("reels") == "")
 {
-    localStorage.setItem("reels") = [];
+    localStorage.setItem("reels", JSON.stringify([]));
 }
 
-const currentReelsData = localStorage.getItem("reels")
+const currentReelsData = JSON.parse(localStorage.getItem("reels"));
 
 funnySlider.addEventListener("change", function()
 {
@@ -31,6 +31,8 @@ funnySlider.addEventListener("change", function()
         "score": funnySlider.value,
         "rating_timestamp": Date.now(),
     })
+
+    localStorage.setItem("reels", JSON.stringify(currentReelsData));
 
     funnySlider.value = 0; 
 });
