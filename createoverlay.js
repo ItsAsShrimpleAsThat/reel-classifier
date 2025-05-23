@@ -36,3 +36,10 @@ funnySlider.addEventListener("change", function()
 
     funnySlider.value = 0; 
 });
+
+openComments()
+
+function openComments()
+{
+    $('svg[aria-label="Comment"]')[0].parentElement.parentElement.click();
+}

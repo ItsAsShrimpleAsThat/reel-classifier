@@ -1,0 +1,1 @@
+const numCommentsPerPost = 30;

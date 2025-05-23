@@ -23,7 +23,8 @@
     "content_scripts": [
       {
         "matches": ["*://*.instagram.com/reels/*"],
-        "js": ["createoverlay.js"]
+        "js": ["jquery-3.7.1.min.js",
+               "createoverlay.js"]
       }
     ]
   }
