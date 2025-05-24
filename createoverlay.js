@@ -41,5 +41,44 @@ openComments()
 
 function openComments()
 {
-    $('svg[aria-label="Comment"]')[0].parentElement.parentElement.click();
+
+    let bestContendor = null;
+    setTimeout(()=>{
+        let comments = $('svg[aria-label="Comment"]');
+        for(let comment of comments)
+        {
+            let rect = comment.getBoundingClientRect();
+
+            if(rect.width > 0 && rect.height > 0 && rect.top >= 0 && rect.bottom <= window.innerHeight)
+            {
+                bestContendor = comment;
+                break;
+            }
+        }
+
+        bestContendor.parentElement.parentElement.click();
+    }, 300)
 }
+
+function onNewPage()
+{
+    console.log("New URL detected")
+    let closeButton = $('svg[aria-label="Close"]')
+    // console.log(closeButton)
+    if(closeButton.length == 0)
+    {
+        openComments();
+    }
+    // openComments()
+}
+
+// == Detect new URL ==
+let currentUrl = location.href;
+const fireUrlChange = () => {
+    const newUrl = location.href;
+    if (newUrl !== currentUrl) {
+        currentUrl = newUrl;
+        onNewPage()
+    }
+};
+setInterval(fireUrlChange, 500);
