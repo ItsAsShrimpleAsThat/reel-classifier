@@ -37,11 +37,11 @@ funnySlider.addEventListener("change", function()
     funnySlider.value = 0; 
 });
 
+let commentBox = null;
 openComments()
 
-function openComments()
+async function openComments()
 {
-
     let bestContendor = null;
     setTimeout(()=>{
         let comments = $('svg[aria-label="Comment"]');
@@ -58,6 +58,20 @@ function openComments()
 
         bestContendor.parentElement.parentElement.click();
     }, 300)
+
+    await new Promise((resolve, reject) => {
+        const start = Date.now();
+        const check = () => {
+            if ($('svg[aria-label="Close"]').length != 0) return resolve();
+            if (Date.now() - start > 5000) return reject('Comment box loading timed out');
+            requestAnimationFrame(check);
+        };
+        check();
+    })
+    .then(commentBox = $('svg[aria-label="Close"]')[0]);  
+    
+    console.log($('svg[aria-label="Close"]'))
+    console.log(commentBox)
 }
 
 function onNewPage()
@@ -70,6 +84,20 @@ function onNewPage()
         openComments();
     }
     // openComments()
+}
+
+async function waitForCommentsToLoad(commentParent, timeout)
+{
+    return new Promise((resolve, reject) => {
+    const start = Date.now();
+    const check = () => {
+        const el = $('aria-label="Loading..."');
+        if (el) return resolve(el);
+        if (Date.now() - start > timeout) return reject('Timeout');
+      requestAnimationFrame(check);
+    };
+    check();
+  });
 }
 
 // == Detect new URL ==
